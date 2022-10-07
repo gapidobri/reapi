@@ -1,0 +1,16 @@
+[
+  {
+    "teacher": "Janez Novak",
+    "lessons": [
+      {
+        "lesson": 3,
+        "subject": "SLO",
+        "class": "R3A",
+        "classroom": "K11",
+        "info": "",
+        "originalTeacher": "Francka Novak",
+        "originalSubject": "MAT"
+      }
+    ]
+  }
+]

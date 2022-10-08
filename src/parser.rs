@@ -26,10 +26,18 @@ pub fn parse(html: String) -> Result<Vec<Substitution>, Box<dyn std::error::Erro
     let dom = tl::parse(&trimmed, tl::ParserOptions::default())?;
     let parser = dom.parser();
 
-    // Get rows from teacher table
-    let mut rows = dom
+    let mut substitutions: Vec<Substitution> = vec![];
+
+    let tables = dom
         .get_elements_by_class_name("nelogiran_seznam_nadomescanj")
-        .collect::<Vec<NodeHandle>>()[1]
+        .collect::<Vec<NodeHandle>>();
+
+    if tables.len() < 2 {
+        return Ok(substitutions);
+    }
+
+    // Get rows from teacher table
+    let mut rows = tables[1]
         .get(parser)
         .ok_or("Teacher table not found")?
         .as_tag()
@@ -39,8 +47,6 @@ pub fn parse(html: String) -> Result<Vec<Substitution>, Box<dyn std::error::Erro
         .collect::<Vec<NodeHandle>>();
 
     rows.remove(0);
-
-    let mut substitutions: Vec<Substitution> = vec![];
 
     for row in rows {
         let mut children = row
